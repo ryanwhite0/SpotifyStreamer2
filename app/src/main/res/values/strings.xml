@@ -5,4 +5,6 @@
     <string name="no_results_artist_toast">No results for the artist you entered.</string>
     <string name="no_results_tracks_toast">No tracks available for the artist you selected.</string>
     <string name="title_activity_track_search">Top Tracks</string>
+    <string name="title_activity_player">PlayerActivity</string>
+    <string name="hello_world">Hello world!</string>
 </resources>
