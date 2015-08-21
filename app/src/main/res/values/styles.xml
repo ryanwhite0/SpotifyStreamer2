@@ -6,11 +6,18 @@
     </style>
 
     <style name="SpotifyImageThumbnail">
-        <item name="android:layout_width">@dimen/image_height_width</item>
-        <item name="android:layout_height">@dimen/image_height_width</item>
+        <item name="android:layout_width">@dimen/image_thumbnail_height_width</item>
+        <item name="android:layout_height">@dimen/image_thumbnail_height_width</item>
         <item name="android:layout_centerVertical">true</item>
         <item name="android:layout_alignParentLeft">true</item>
-        <item name="android:padding">@dimen/image_padding</item>
+        <item name="android:padding">@dimen/image_thumbnail_padding</item>
+    </style>
+
+    <style name="SpotifyImagePlayer">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:padding">@dimen/text_view_padding</item>
     </style>
 
     <style name="SpotifyTrackLinearLayout">
@@ -38,5 +45,26 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">@dimen/abc_text_size_small_material</item>
     </style>
+
+    <style name="SmallText.LeftGravity">
+        <item name="android:gravity">left</item>
+    </style>
+
+    <style name="SmallText.CenterGravity">
+        <item name="android:gravity">center_horizontal</item>
+    </style>
+
+    <style name="SmallText.RightGravity">
+        <item name="android:gravity">right</item>
+    </style>
+
+    <style name="SpotifyImageButton">
+        <item name="android:layout_width">@dimen/image_button_height_width</item>
+        <item name="android:layout_height">@dimen/image_button_height_width</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_alignParentLeft">true</item>
+        <item name="android:padding">@dimen/text_view_padding</item>
+    </style>
+
 
 </resources>

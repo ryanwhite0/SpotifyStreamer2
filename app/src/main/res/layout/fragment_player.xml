@@ -9,58 +9,68 @@
     tools:context="com.rdwhite.spotifystreamer.PlayerActivityFragment">
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/textView2"
-        android:layout_gravity="center_horizontal" />
+        style="@style/SmallText.CenterGravity"
+        android:id="@+id/player_artist_name" />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/textView"
-        android:layout_gravity="center_horizontal" />
+        style="@style/SmallText.CenterGravity"
+        android:id="@+id/player_album_title" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageView"
+        android:id="@+id/player_album_cover"
         android:layout_gravity="center_horizontal" />
 
     <TextView
-        android:layout_width="wrap_content"
+        style="@style/SmallText.CenterGravity"
+        android:id="@+id/player_track_title" />
+
+    <SeekBar
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/textView3"
-        android:layout_gravity="center_horizontal" />
+        android:id="@+id/player_transport"
+        android:layout_gravity="center_horizontal"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            style="@style/SmallText.LeftGravity"
+            android:text="0:00"
+            android:id="@+id/player_transport_current_position" />
+        <TextView
+            style="@style/SmallText.RightGravity"
+            android:text="0:00"
+            android:id="@+id/player_transport_track_length" />
+    </RelativeLayout>
+
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal">
+        android:gravity="center_horizontal">
 
         <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/SpotifyImageButton"
             android:text="New Button"
-            android:id="@+id/button"
-            android:src="@android:drawable/ic_media_previous"/>
+            android:id="@+id/player_button_previous"
+            android:src="@android:drawable/ic_media_previous"
+            android:layout_gravity="left" />
 
         <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/SpotifyImageButton"
             android:text="New Button"
-            android:id="@+id/button2"
+            android:id="@+id/player_button_play"
             android:src="@android:drawable/ic_media_play"/>
 
         <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/SpotifyImageButton"
             android:text="New Button"
-            android:id="@+id/button3"
-            android:src="@android:drawable/ic_media_next"/>
+            android:id="@+id/player_button_next"
+            android:src="@android:drawable/ic_media_next"
+            android:layout_gravity="right" />
     </LinearLayout>
 
 </LinearLayout>

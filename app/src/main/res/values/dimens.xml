@@ -1,8 +1,9 @@
 <resources>
     <dimen name="text_view_padding">20dp</dimen>
-    <dimen name="image_height_width">100dp</dimen>
-    <dimen name="image_padding">5dp</dimen>
+    <dimen name="image_thumbnail_height_width">100dp</dimen>
+    <dimen name="image_thumbnail_padding">5dp</dimen>
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="image_button_height_width">50dp</dimen>
 </resources>
