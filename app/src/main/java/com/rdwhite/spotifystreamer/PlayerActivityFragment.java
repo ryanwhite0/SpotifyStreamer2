@@ -22,12 +22,12 @@ import java.util.ArrayList;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class PlayerActivityFragment extends Fragment {
+public class PlayerActivityFragment extends Fragment implements View.OnClickListener, SeekBar.OnSeekBarChangeListener{
 
     private final String LOG_TAG = PlayerActivityFragment.class.getSimpleName();
 
     private ArrayList<TrackSearchResult> trackSearchResultArrayList;
-    private int transportIndex;
+    private int trackIndex;
 
     private TextView artistNameTextView;
     private TextView albumTitleTextView;
@@ -47,7 +47,7 @@ public class PlayerActivityFragment extends Fragment {
 
     @Override
     public void onSaveInstanceState(Bundle bundle) {
-        bundle.putParcelableArrayList("playerActivityTracks", trackSearchResultArrayList);
+        bundle.putParcelableArrayList(Constants.PLAYER_TRACKS_LIST, trackSearchResultArrayList);
         super.onSaveInstanceState(bundle);
     }
 
@@ -61,13 +61,15 @@ public class PlayerActivityFragment extends Fragment {
         albumCoverImageView = (ImageView) rootView.findViewById(R.id.player_album_cover);
         trackTitleTextView = (TextView) rootView.findViewById(R.id.player_track_title);
         transportSeekBar = (SeekBar) rootView.findViewById(R.id.player_transport);
+        transportSeekBar.setOnClickListener(this);
         transportCurrentPositionTextView = (TextView) rootView.findViewById(R.id.player_transport_current_position);
         transportTrackLengthTextView = (TextView) rootView.findViewById(R.id.player_transport_track_length);
         previousImageButton = (ImageButton) rootView.findViewById(R.id.player_button_previous);
+        previousImageButton.setOnClickListener(this);
         playPauseImageButton = (ImageButton) rootView.findViewById(R.id.player_button_play);
+        playPauseImageButton.setOnClickListener(this);
         nextImageButton = (ImageButton) rootView.findViewById(R.id.player_button_next);
-
-        Intent intent = getActivity().getIntent();
+        nextImageButton.setOnClickListener(this);
 
         return rootView;
     }
@@ -76,122 +78,70 @@ public class PlayerActivityFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null) {
-            trackSearchResultArrayList = savedInstanceState.getParcelableArrayList("playerActivityTracks");
+            trackSearchResultArrayList = savedInstanceState.getParcelableArrayList(Constants.PLAYER_TRACKS_LIST);
         } else {
             trackSearchResultArrayList = new ArrayList<TrackSearchResult>();
         }
-        // TODO: Continue here....
+
         Intent intent = getActivity().getIntent();
         if (savedInstanceState == null && intent != null && intent.hasExtra(Intent.EXTRA_TEXT)) {
-            String spotifyId = intent.getStringExtra(Intent.EXTRA_TEXT);
-            FetchTrackResultTask fetchTrackResultTask = new FetchTrackResultTask();
-            fetchTrackResultTask.execute(spotifyId);
+            trackIndex = Integer.parseInt(intent.getStringExtra(Intent.EXTRA_TEXT));
+            Bundle bundle = intent.getExtras();
+            trackSearchResultArrayList = bundle.getParcelableArrayList(Constants.PLAYER_TRACKS_LIST);
         }
     }
 
-    public ArrayList<TrackSearchResult> getTrackSearchResultArrayList() {
-        return trackSearchResultArrayList;
+    @Override
+    public void onClick(View v) {
+        switch(v.getId()) {
+            case R.id.player_button_play:
+                if(mediaPlayer.isPlaying()) {
+                    mediaPlayer.pause();
+                    // TODO: Change Button Image
+                    //playPauseImageButton.setImageResource(R.drawable.btn_play);
+                }
+                else {
+                    mediaPlayer.start();
+                    // TODO: Change Button Image
+                }
+                break;
+            case R.id.player_button_next:
+                if(trackIndex + 1 >= trackSearchResultArrayList.size()) {
+                    trackIndex = 0;
+                }
+                else {
+                    trackIndex++;
+                }
+                // TODO: Update GUI, Play track.
+                break;
+            case R.id.player_button_previous:
+                if(trackIndex = 0) {
+                    trackIndex = trackSearchResultArrayList.size() - 1;
+                }
+                else {
+                    trackIndex--;
+                }
+                // TODO: Update GUI, Play Track.
+                break;
+
+
+        }
+
     }
 
-    public void setTrackSearchResultArrayList(ArrayList<TrackSearchResult> trackSearchResultArrayList) {
-        this.trackSearchResultArrayList = trackSearchResultArrayList;
+    @Override
+    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
     }
 
-    public int getTransportIndex() {
-        return transportIndex;
+    @Override
+    public void onStartTrackingTouch(SeekBar seekBar) {
+
     }
 
-    public void setTransportIndex(int transportIndex) {
-        this.transportIndex = transportIndex;
-    }
+    @Override
+    public void onStopTrackingTouch(SeekBar seekBar) {
 
-    public TextView getArtistNameTextView() {
-        return artistNameTextView;
     }
-
-    public void setArtistNameTextView(TextView artistNameTextView) {
-        this.artistNameTextView = artistNameTextView;
-    }
-
-    public TextView getAlbumTitleTextView() {
-        return albumTitleTextView;
-    }
-
-    public void setAlbumTitleTextView(TextView albumTitleTextView) {
-        this.albumTitleTextView = albumTitleTextView;
-    }
-
-    public ImageView getAlbumCoverImageView() {
-        return albumCoverImageView;
-    }
-
-    public void setAlbumCoverImageView(ImageView albumCoverImageView) {
-        this.albumCoverImageView = albumCoverImageView;
-    }
-
-    public TextView getTrackTitleTextView() {
-        return trackTitleTextView;
-    }
-
-    public void setTrackTitleTextView(TextView trackTitleTextView) {
-        this.trackTitleTextView = trackTitleTextView;
-    }
-
-    public SeekBar getTransportSeekBar() {
-        return transportSeekBar;
-    }
-
-    public void setTransportSeekBar(SeekBar transportSeekBar) {
-        this.transportSeekBar = transportSeekBar;
-    }
-
-    public TextView getTransportCurrentPositionTextView() {
-        return transportCurrentPositionTextView;
-    }
-
-    public void setTransportCurrentPositionTextView(TextView transportCurrentPositionTextView) {
-        this.transportCurrentPositionTextView = transportCurrentPositionTextView;
-    }
-
-    public TextView getTransportTrackLengthTextView() {
-        return transportTrackLengthTextView;
-    }
-
-    public void setTransportTrackLengthTextView(TextView transportTrackLengthTextView) {
-        this.transportTrackLengthTextView = transportTrackLengthTextView;
-    }
-
-    public ImageButton getPreviousImageButton() {
-        return previousImageButton;
-    }
-
-    public void setPreviousImageButton(ImageButton previousImageButton) {
-        this.previousImageButton = previousImageButton;
-    }
-
-    public ImageButton getPlayPauseImageButton() {
-        return playPauseImageButton;
-    }
-
-    public void setPlayPauseImageButton(ImageButton playPauseImageButton) {
-        this.playPauseImageButton = playPauseImageButton;
-    }
-
-    public ImageButton getNextImageButton() {
-        return nextImageButton;
-    }
-
-    public void setNextImageButton(ImageButton nextImageButton) {
-        this.nextImageButton = nextImageButton;
-    }
-
-    public MediaPlayer getMediaPlayer() {
-        return mediaPlayer;
-    }
-
-    public void setMediaPlayer(MediaPlayer mediaPlayer) {
-        this.mediaPlayer = mediaPlayer;
-    }
-
 
 }

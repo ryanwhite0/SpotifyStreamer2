@@ -39,7 +39,7 @@ public class TrackSearchActivityFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null) {
-            trackSearchResults = savedInstanceState.getParcelableArrayList("trackSearchResults");
+            trackSearchResults = savedInstanceState.getParcelableArrayList(Constants.TRACK_SEARCH_RESULTS);
         } else {
             trackSearchResults = new ArrayList<TrackSearchResult>();
         }
@@ -67,7 +67,7 @@ public class TrackSearchActivityFragment extends Fragment {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        outState.putParcelableArrayList("trackSearchResults", trackSearchResults);
+        outState.putParcelableArrayList(Constants.TRACK_SEARCH_RESULTS, trackSearchResults);
         super.onSaveInstanceState(outState);
     }
 
