@@ -115,7 +115,7 @@ public class PlayerActivityFragment extends Fragment implements View.OnClickList
                 // TODO: Update GUI, Play track.
                 break;
             case R.id.player_button_previous:
-                if(trackIndex = 0) {
+                if(trackIndex == 0) {
                     trackIndex = trackSearchResultArrayList.size() - 1;
                 }
                 else {
