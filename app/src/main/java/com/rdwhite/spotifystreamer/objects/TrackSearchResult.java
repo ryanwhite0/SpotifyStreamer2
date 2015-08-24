@@ -9,17 +9,29 @@ import android.os.Parcelable;
 public class TrackSearchResult implements Parcelable {
     private String trackTitle;
     private String trackAlbum;
+    private String trackArtist;
     private String albumImageSmallUrl;
     private String albumImageLargeUrl;
     private String previewUrl;
 
-    public TrackSearchResult(String trackTitle, String trackAlbum, String albumImageSmallUrl,
+    public TrackSearchResult(String trackTitle, String trackAlbum, String trackArtist,
+                             String albumImageSmallUrl,
                              String albumImageLargeUrl, String previewUrl) {
         this.trackTitle = trackTitle;
         this.trackAlbum = trackAlbum;
+        this.trackArtist = trackArtist;
         this.albumImageSmallUrl = albumImageSmallUrl;
         this.albumImageLargeUrl = albumImageLargeUrl;
         this.previewUrl = previewUrl;
+    }
+
+    public TrackSearchResult(Parcel parcel) {
+        this.trackTitle = parcel.readString();
+        this.trackAlbum = parcel.readString();
+        this.trackArtist = parcel.readString();
+        this.albumImageSmallUrl = parcel.readString();
+        this.albumImageLargeUrl = parcel.readString();
+        this.previewUrl = parcel.readString();
     }
     @Override
     public int describeContents() {
@@ -30,6 +42,7 @@ public class TrackSearchResult implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(trackTitle);
         dest.writeString(trackAlbum);
+        dest.writeString(trackArtist);
         dest.writeString(albumImageSmallUrl);
         dest.writeString(albumImageLargeUrl);
         dest.writeString(previewUrl);
@@ -74,4 +87,23 @@ public class TrackSearchResult implements Parcelable {
     public void setPreviewUrl(String previewUrl) {
         this.previewUrl = previewUrl;
     }
+
+    public String getTrackArtist() {
+        return trackArtist;
+    }
+
+    public void setTrackArtist(String trackArtist) {
+        this.trackArtist = trackArtist;
+    }
+
+    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+        public TrackSearchResult createFromParcel(Parcel parcel) {
+            return new TrackSearchResult(parcel);
+        }
+
+        public TrackSearchResult[] newArray(int size) {
+            return new TrackSearchResult[size];
+        }
+    };
+
 }

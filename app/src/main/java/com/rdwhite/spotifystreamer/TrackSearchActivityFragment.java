@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -54,6 +55,17 @@ public class TrackSearchActivityFragment extends Fragment {
 
         ListView listView = (ListView) rootView.findViewById(R.id.track_search_list_view);
         listView.setAdapter(trackSearchAdapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getActivity(), PlayerActivity.class);
+                intent.putExtra(Intent.EXTRA_TEXT, String.valueOf(trackSearchAdapter.getPosition(trackSearchAdapter.getItem(position))));
+                Bundle bundle = intent.getExtras();
+                bundle.putParcelableArrayList(Constants.PLAYER_TRACKS_LIST, trackSearchResults);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
 
         Intent intent = getActivity().getIntent();
         if (savedInstanceState == null && intent != null && intent.hasExtra(Intent.EXTRA_TEXT)) {
@@ -116,7 +128,8 @@ public class TrackSearchActivityFragment extends Fragment {
                             largeImageUrl = smallImageUrl;
                         }
                     }
-                    trackSearchAdapter.add(new TrackSearchResult(track.name, track.album.name, smallImageUrl,
+                    trackSearchAdapter.add(new TrackSearchResult(track.name, track.album.name,
+                            track.artists.get(0).name, smallImageUrl,
                             largeImageUrl, track.preview_url));
                 }
             }

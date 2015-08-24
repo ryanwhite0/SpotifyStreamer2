@@ -1,6 +1,7 @@
 package com.rdwhite.spotifystreamer;
 
 import android.content.Intent;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
@@ -14,10 +15,13 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.rdwhite.spotifystreamer.objects.TrackSearchResult;
+import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+
+import kaaes.spotify.webapi.android.models.Track;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -112,6 +116,7 @@ public class PlayerActivityFragment extends Fragment implements View.OnClickList
                 else {
                     trackIndex++;
                 }
+                updateDisplay();
                 // TODO: Update GUI, Play track.
                 break;
             case R.id.player_button_previous:
@@ -122,6 +127,7 @@ public class PlayerActivityFragment extends Fragment implements View.OnClickList
                     trackIndex--;
                 }
                 // TODO: Update GUI, Play Track.
+                updateDisplay();
                 break;
 
 
@@ -129,9 +135,27 @@ public class PlayerActivityFragment extends Fragment implements View.OnClickList
 
     }
 
+    public void updateDisplay() {
+        TrackSearchResult trackSearchResult = trackSearchResultArrayList.get(trackIndex);
+        artistNameTextView.setText(trackSearchResult.getTrackArtist());
+        albumTitleTextView.setText(trackSearchResult.getTrackAlbum());
+        trackTitleTextView.setText(trackSearchResult.getTrackTitle());
+
+        if(!Util.isStringNullOrEmpty(trackSearchResult.getAlbumImageSmallUrl())) {
+            Picasso.with(getActivity()).load(trackSearchResult.getAlbumImageLargeUrl()).into(
+                    albumCoverImageView);
+        }
+    }
+
+    public void playTrack() {
+
+    }
+
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
+        if(fromUser) {
+            mediaPlayer.seekTo(progress);
+        }
     }
 
     @Override
